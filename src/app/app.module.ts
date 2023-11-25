@@ -6,15 +6,17 @@ import { AppComponent } from './app.component';
 import { IndexComponent } from './routes/index/index.component';
 import { EventsComponent } from './routes/events/events.component';
 import { EventComponent } from './routes/event/event.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EventCardComponent } from './routes/events/components/event-card/event-card.component';
-import { GraphQLModule } from './graphql.module';
 import { HttpClientModule } from '@angular/common/http';
-import { GraphqlService } from './services/graphql.service';
 import { EventSummaryComponent } from './routes/event/components/event-summary/event-summary.component';
 import { EventFundsComponent } from './routes/event/components/event-funds/event-funds.component';
 import { EventExpensesComponent } from './routes/event/components/event-expenses/event-expenses.component';
 import { EventEarningsComponent } from './routes/event/components/event-earnings/event-earnings.component';
+import { LoginComponent } from './routes/login/login.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { AppbarComponent } from './components/appbar/appbar.component';
+import { SummaryComponent } from './routes/index/summary/summary.component';
 
 @NgModule({
   declarations: [
@@ -26,16 +28,19 @@ import { EventEarningsComponent } from './routes/event/components/event-earnings
     EventSummaryComponent,
     EventFundsComponent,
     EventExpensesComponent,
-    EventEarningsComponent
+    EventEarningsComponent,
+    LoginComponent,
+    SidebarComponent,
+    AppbarComponent,
+    SummaryComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    GraphQLModule,
+    ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [GraphqlService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

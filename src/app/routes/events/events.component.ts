@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { EventsService } from 'src/app/services/events.service';
+import { Component, inject } from '@angular/core';
+import { EventsService } from './events.service';
+import { FormControl, FormGroup, RequiredValidator, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-events',
@@ -10,19 +11,22 @@ import { EventsService } from 'src/app/services/events.service';
 })
 export class EventsComponent {
 
-  modalOpen = false;
+  es = inject(EventsService)
 
-  name = '';
-  description = '';
+  addEventForm = new FormGroup({
+    name: new FormControl(''),
+    datetime: new FormControl(''),
+    location: new FormControl(''),
+    treasurer: new FormControl(''),
+    description: new FormControl(''),
+  })
 
-  toggleModalOpen() {
-    this.modalOpen = !this.modalOpen
+  onSubmit() {
+    let { name, datetime, location, treasurer, description } = this.addEventForm.value
+    console.log(this.addEventForm.value)
+    this.es.api.PostEvent(name, datetime, location, description, parseInt(treasurer)).subscribe((result) => {
+      this.es.getEvents()
+    })
   }
-
-  addEvent() {
-    this.events.addEvent({ name: this.name, description: this.description })
-  }
-
-  constructor(protected events: EventsService) { }
 
 }

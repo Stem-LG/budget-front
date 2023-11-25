@@ -1,0 +1,37 @@
+<div class="flex">
+  <div
+    class="w-full h-screen bg-primary flex items-center justify-center relative overflow-y-hidden"
+  >
+    <h1 class="text-secondary-content text-7xl text-center">
+      Welcome <br />
+      to <br />
+      BudgetTrack
+    </h1>
+  </div>
+  <div class="w-full h-screen flex items-center justify-center">
+    <form
+      action=""
+      class="flex flex-col gap-5 items-center p-4 border-4 rounded border-primary"
+      [formGroup]="loginForm"
+      (ngSubmit)="onSubmit()"
+    >
+      <input
+        type="email"
+        placeholder="Username or Email"
+        class="input input-sm bg-base-300"
+        formControlName="username"
+        required
+      />
+      <input
+        type="password"
+        placeholder="Password"
+        class="input input-sm bg-base-300"
+        formControlName="password"
+        required
+      />
+      <button [disabled]="loginForm.invalid" type="submit" class="btn btn-sm btn-primary ml-auto">
+        Login
+      </button>
+    </form>
+  </div>
+</div>

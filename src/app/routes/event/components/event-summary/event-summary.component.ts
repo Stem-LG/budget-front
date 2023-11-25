@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { EventService } from 'src/app/services/event.service';
+import { EventService } from 'src/app/routes/event/event.service';
 
 @Component({
   selector: 'app-event-summary',

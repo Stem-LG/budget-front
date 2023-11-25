@@ -1,8 +1,12 @@
-<div class="w-full text-center pt-5">
-  <button
-    class="btn btn-primary btn-sm text-xs"
-    routerLink="/event"
-  >
-    Start app!
-  </button>
+<div class="flex h-screen">
+  <app-sidebar [page]="0" />
+  <div class="w-full">
+    <app-appbar title="Dashboard" />
+
+    <h2 class="mt-5 ml-5 text-start text-xl">Summary</h2>
+
+    <div class="mt-5 mx-5">
+      <app-summary />
+    </div>
+  </div>
 </div>

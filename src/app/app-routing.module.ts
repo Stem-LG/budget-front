@@ -3,19 +3,29 @@ import { RouterModule, Routes } from '@angular/router';
 import { IndexComponent } from './routes/index/index.component';
 import { EventsComponent } from './routes/events/events.component';
 import { EventComponent } from './routes/event/event.component';
+import { LoginComponent } from './routes/login/login.component';
 
 const routes: Routes = [
+  {
+    path: "login",
+    component: LoginComponent,
+  },
   {
     path: "event/:id",
     component: EventComponent
   },
   {
     path: "event",
-    component: EventsComponent
+    component: EventsComponent,
+  },
+  {
+    path: "dashboard",
+    component: IndexComponent,
   },
   {
     path: "",
-    component: IndexComponent
+    redirectTo: "/dashboard",
+    pathMatch: "full"
   },
 ];
 

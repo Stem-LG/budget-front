@@ -4,7 +4,7 @@
       <th class="py-0 pl-2 pr-0">
         <button
           class="btn btn-circle btn-xs btn-success text-primary-content mt-0.5"
-            (click)="toggleAddEarning()"
+          (click)="toggleAddEarning()"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -32,33 +32,55 @@
   <tbody>
     <tr class="">
       <td colspan="7" class="p-0">
-        <div
+        <form
           class="{{
             addEarningOpen ? 'h-32 my-2' : 'h-0'
           }} overflow-hidden transition-all ease-out duration-300 w-full flex justify-evenly flex-wrap"
+          [formGroup]="addEarningForm"
+          (ngSubmit)="onSubmit()"
         >
           <input
             type="text"
             placeholder="item"
+            formControlName="item"
             class="input input-sm w-32 text-secondary-content"
+            required
           />
           <input
             type="number"
             placeholder="amount"
+            formControlName="amount"
             class="input input-sm w-32 text-secondary-content"
+            required
           />
           <input
             type="datetime-local"
             placeholder="date"
+            formControlName="date"
             class="input input-sm w-32 text-secondary-content"
+            required
           />
-          <input
+          <select
             type="text"
             placeholder="seller"
-            class="input input-sm w-32 text-secondary-content"
-          />
+            class="select select-primary text-secondary-content select-sm"
+            formControlName="seller"
+            required
+          >
+            <option value="" disabled hidden>Select a Seller</option>
+            <option
+              *ngFor="let treasurer of evs.treasurers"
+              value="{{ treasurer.id }}"
+            >
+              {{ treasurer.username }}
+            </option>
+          </select>
           <div class="flex items-center gap-5">
-            <button class="btn btn-sm btn-error">
+            <button
+              type="reset"
+              (click)="toggleAddEarning()"
+              class="btn btn-sm btn-error"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -78,10 +100,15 @@
             <textarea
               type="text"
               placeholder="description"
+              formControlName="description"
               rows="4"
               class="textarea textarea-sm w-60 text-secondary-content leading-tight resize-none"
             ></textarea>
-            <button class="btn btn-sm btn-success">
+            <button
+              type="submit"
+              [disabled]="addEarningForm.invalid"
+              class="btn btn-sm btn-success"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -99,14 +126,17 @@
               Confirm
             </button>
           </div>
-        </div>
+        </form>
       </td>
     </tr>
-    <tr class="">
+    <tr *ngFor="let earning of evs.earnings" class="">
       <td class="group py-1 px-0 max-w-[42px]">
-        <p class="group-hover:hidden text-center">1</p>
+        <p class="group-hover:hidden text-center">{{ earning.id }}</p>
         <div class="hidden group-hover:flex gap-1 pl-2 w-0 group-hover:w-16">
-          <button class="btn btn-circle btn-xs btn-error text-primary-content">
+          <button
+            (click)="deleteEarning(earning.id)"
+            class="btn btn-circle btn-xs btn-error text-primary-content"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -124,6 +154,7 @@
           </button>
           <button
             class="btn btn-circle btn-xs btn-secondary text-primary-content"
+            (click)="toggleEditEarning(earning.id)"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -142,11 +173,11 @@
           </button>
         </div>
       </td>
-      <td>Food</td>
-      <td>1000</td>
-      <td class="w-[120px] px-0">0000-00-00 00:00</td>
-      <td>Samir</td>
-      <td>Description of the fund, a</td>
+      <td>{{ earning.item }}</td>
+      <td>{{ earning.amount }}</td>
+      <td class="w-[120px] px-0">{{ evs.formatDate(earning.date) }}</td>
+      <td>{{ earning.seller.name }}</td>
+      <td>{{ earning.description }}</td>
     </tr>
   </tbody>
 </table>

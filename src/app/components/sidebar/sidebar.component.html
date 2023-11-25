@@ -1,0 +1,42 @@
+<nav class="h-full w-64 bg-black flex flex-col">
+  <h1
+    class="w-full text-center mt-5 text-xl text-primary cursor-pointer"
+    routerLink="/"
+  >
+    BudgetTrack
+  </h1>
+  <div class="flex flex-col h-full justify-center gap-4 pl-7">
+    <button
+      *ngFor="
+        let btn of [
+          {
+            title: 'Dashboard',
+            icon: '/assets/icons/home.svg#img',
+            link: '/dashboard'
+          },
+          {
+            title: 'Events',
+            icon: '/assets/icons/events.svg#img',
+            link: '/event'
+          },
+
+          {
+            title: 'Settings',
+            icon: '/assets/icons/settings.svg#img',
+            link: '/settings'
+          }
+        ];
+        let i = index
+      "
+      class=" flex items-center gap-3 {{
+        i == page ? 'text-primary' : 'text-white'
+      }}"
+      [routerLink]="btn.link"
+    >
+      <svg class="h-8 w-8">
+        <use [attr.xlink:href]="btn.icon" [attr.href]="btn.icon"></use>
+      </svg>
+      <p class="text-xl">{{ btn.title }}</p>
+    </button>
+  </div>
+</nav>

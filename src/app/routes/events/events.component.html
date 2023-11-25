@@ -1,67 +1,98 @@
-<div class="flex justify-center gap-5 mt-5 flex-wrap">
-  <div *ngIf="events.loading" class="flex items-center gap-2">
-    <h1 class="text-xl font-bold">Loading</h1>
-    <span class="loading loading-infinity loading-lg"></span>
-  </div>
-  <div *ngFor="let event of events.events">
-    <app-event-card
-      name="{{ event.name }}"
-      description="{{ event.description }}"
-      link="{{ event.link }}"
-    />
-  </div>
-</div>
-<div class="flex justify-center mt-5">
-  <button class="btn btn-primary" onclick="add_event_modal.showModal()">
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke-width="2.5"
-      stroke="currentColor"
-      class="w-5 h-5"
-    >
-      <path
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        d="M12 4.5v15m7.5-7.5h-15"
-      />
-    </svg>
-    Add Event
-  </button>
-</div>
-<dialog id="add_event_modal" class="modal">
-  <div class="modal-box outline outline-primary outline-3">
-    <button
-      class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
-      onclick="add_event_modal.close()"
-    >
-      ✕
-    </button>
-    <h3 class="font-bold text-lg mb-5">Add an event</h3>
-    <form action="#" class="flex justify-evenly gap-5 flex-wrap">
-      <input
-        type="text"
-        placeholder="name"
-        class="input input-primary input-sm w-52"
-      />
-      <input
-        type="datetime-local"
-        placeholder="date"
-        class="input input-primary input-sm w-52"
-      />
-      <input
-        type="text"
-        placeholder="location"
-        class="input input-primary input-sm w-52"
-      />
-      <input
-        type="text"
-        placeholder="treasurer"
-        class="input input-primary input-sm w-52"
-      />
-      <div class="flex items-center gap-5">
-            <button class="btn btn-sm btn-error">
+<div class="flex h-screen">
+  <app-sidebar [page]="1" />
+  <div class="w-full">
+    <app-appbar title="Events" />
+
+    <div class="flex justify-center gap-5 mt-5 flex-wrap">
+      <div *ngIf="es.loading" class="flex items-center gap-2">
+        <h1 class="text-xl font-bold">Loading</h1>
+        <span class="loading loading-infinity loading-lg"></span>
+      </div>
+      <div *ngFor="let event of es.events">
+        <app-event-card
+          [id]="event.id"
+          name="{{ event.name }}"
+          description="{{ event.description }}"
+          link="{{ event.id }}"
+          manager_name="{{ event.manager.name }}"
+        />
+      </div>
+    </div>
+    <div class="flex justify-center mt-5">
+      <button
+        class="btn btn-primary"
+        onclick="add_event_modal.showModal()"
+        (click)="es.getTreasurers()"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="2.5"
+          stroke="currentColor"
+          class="w-5 h-5"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M12 4.5v15m7.5-7.5h-15"
+          />
+        </svg>
+        Add Event
+      </button>
+    </div>
+    <dialog id="add_event_modal" class="modal">
+      <div class="modal-box outline outline-primary outline-3">
+        <button
+          class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+          onclick="add_event_modal.close()"
+        >
+          ✕
+        </button>
+        <h3 class="font-bold text-lg mb-5">Add an event</h3>
+        <form
+          [formGroup]="addEventForm"
+          class="flex justify-evenly gap-5 flex-wrap"
+          (ngSubmit)="onSubmit()"
+        >
+          <input
+            type="text"
+            placeholder="name"
+            class="input input-primary input-sm w-52"
+            formControlName="name"
+            required
+          />
+          <input
+            type="datetime-local"
+            placeholder="date"
+            class="input input-primary input-sm w-52"
+            formControlName="datetime"
+            required
+          />
+          <input
+            type="text"
+            placeholder="location"
+            class="input input-primary input-sm w-52"
+            formControlName="location"
+            required
+          />
+          <select
+            type="text"
+            placeholder="treasurer"
+            class="select select-primary select-sm w-52"
+            formControlName="treasurer"
+            required
+          >
+            <option value="" disabled hidden>Select a treasurer</option>
+            <option
+              *ngFor="let treasurer of es.treasurers"
+              value="{{ treasurer.id }}"
+            >
+              {{ treasurer.username }}
+            </option>
+          </select>
+          <div class="flex items-center gap-5">
+            <button type="reset" class="btn btn-sm btn-error">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -82,8 +113,10 @@
               placeholder="description"
               rows="2"
               class="textarea textarea-primary textarea-sm p-2 w-60 leading-tight resize-none"
+              formControlName="description"
+              required
             ></textarea>
-            <button class="btn btn-sm btn-success">
+            <button [disabled]="addEventForm.invalid" type="submit" class="btn btn-sm btn-success">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -100,9 +133,11 @@
               </svg>
             </button>
           </div>
-    </form>
+        </form>
+      </div>
+      <form method="dialog" class="modal-backdrop">
+        <button>close</button>
+      </form>
+    </dialog>
   </div>
-  <form method="dialog" class="modal-backdrop">
-    <button>close</button>
-  </form>
-</dialog>
+</div>

@@ -1,21 +1,21 @@
-<div class="stats bg-primary text-primary-content rounded-md">
+<div class="stats bg-primary w-full text-primary-content rounded-md">
   <div class="stat">
-    <div class="stat-title text-primary-content">Account balance</div>
-    <div class="stat-value">$80,400</div>
+    <div class="stat-title text-primary-content">Funds</div>
+    <div class="stat-value">${{evs.event.funds}}</div>
     <div class="stat-actions">
       <button class="btn btn-sm btn-success" (click)="evs.setSelectedTab(1)">Add Fund</button>
     </div>
   </div>
   <div class="stat">
     <div class="stat-title text-primary-content">Expenses</div>
-    <div class="stat-value">$40,000</div>
+    <div class="stat-value">${{evs.event.expenses}}</div>
     <div class="stat-actions">
       <button class="btn btn-sm" (click)="evs.setSelectedTab(2)">Add Expense</button>
     </div>
   </div>
   <div class="stat">
     <div class="stat-title text-primary-content">Earnings</div>
-    <div class="stat-value">$20,000</div>
+    <div class="stat-value">${{evs.event.earnings}}</div>
     <div class="stat-actions">
       <button class="btn btn-sm" (click)="evs.setSelectedTab(3)">Add Earning</button>
     </div>
@@ -23,7 +23,7 @@
 
   <div class="stat">
     <div class="stat-title text-primary-content">Current balance</div>
-    <div class="stat-value">$60,400</div>
+    <div class="stat-value">${{evs.balance}}</div>
     <div class="stat-actions"></div>
   </div>
 </div>
