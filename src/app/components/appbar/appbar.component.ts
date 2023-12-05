@@ -13,11 +13,9 @@ export class AppbarComponent {
   user = { username: "not logged in" }
 
   authService = inject(AuthService);
-  router = inject(Router);
 
   logout() {
     this.authService.logout()
-    this.router.navigate(["/login"])
   }
 
   ngOnInit(): void {

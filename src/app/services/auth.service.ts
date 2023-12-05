@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { environment } from 'environment';
 import { firstValueFrom } from 'rxjs';
 
@@ -13,6 +14,7 @@ export class AuthService {
 
   HttpClient = inject(HttpClient);
 
+  router = inject(Router);
 
   token: string = null
 
@@ -44,7 +46,7 @@ export class AuthService {
     this.HttpClient.delete(server_url + "auth/logout/", { headers: { Authorization: `Token ${this.token}` } }).subscribe((result) => {
       this.token = null
       localStorage.removeItem("token")
-      console.log(result)
+      this.router.navigateByUrl("/login")
     })
   }
 
