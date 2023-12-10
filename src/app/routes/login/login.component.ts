@@ -25,13 +25,4 @@ export class LoginComponent {
       }
     })
   }
-
-  ngOnInit(): void {
-    this.authService.userInfo().then((result) => {
-      if (result == null) return
-
-      //redirect to index
-
-    })
-  }
 }

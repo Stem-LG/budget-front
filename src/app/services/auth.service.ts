@@ -35,6 +35,7 @@ export class AuthService {
 
   public login(username: string, password: string) {
     return this.HttpClient.post(server_url + "auth/login/", { username, password }).subscribe((result) => {
+      console.log(result)
       this.token = result["token"]
       localStorage.setItem("token", this.token)
     })
